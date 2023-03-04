@@ -1,6 +1,8 @@
 /*
     ./webpack.config.js
 */
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
 const path = require("path");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const NODE_ENV = "production"
@@ -10,6 +12,12 @@ console.info({
   buildPath:path.resolve(__dirname, 'build')
 })
 console.log("---------------------- WEBPACK ------------------")
+
+const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+  template: path.join(__dirname, 'public', 'index.html'), 
+  filename: "index.html",
+  inject: "body"
+});
 module.exports = {
   resolve: {
     fallback: {
@@ -128,7 +136,7 @@ module.exports = {
       }
     ]
   },
- 
+  plugins: [HtmlWebpackPluginConfig],
   optimization: {  
     minimizer: [
       new UglifyJsPlugin({

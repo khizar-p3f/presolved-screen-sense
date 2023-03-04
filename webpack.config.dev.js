@@ -5,13 +5,17 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 //const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const NODE_ENV = "development"
 
 
 var APP_DIR = path.resolve(__dirname);
-var BUILD_DIR = path.resolve(__dirname,  'build/');
-var devbuild = path.resolve(__dirname,  'devbuild/');
+var BUILD_DIR = path.resolve(__dirname, 'build/');
+var devbuild = path.resolve(__dirname, 'devbuild/');
 
+const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+  template: path.join(APP_DIR, 'public', 'index.html'),
+  filename: "index.html",
+  inject: "body"
+});
 
 module.exports = {
   stats: 'errors-only',
@@ -120,7 +124,7 @@ module.exports = {
       }
     ]
   },
-
+  plugins: [HtmlWebpackPluginConfig],
   optimization: {
     splitChunks: false,
     minimizer: [
@@ -136,7 +140,7 @@ module.exports = {
     ]
   },
   devServer: {
-    historyApiFallback:true,
+    historyApiFallback: true,
     allowedHosts: 'all',
     port: 5000,
     liveReload: true,
@@ -153,7 +157,7 @@ module.exports = {
       console.log("---------------------- WEBPACK DEVELOPMENT CONFIG------------------")
       console.table({
         port,
-        environment: NODE_ENV,
+        environment: "development",
         appDirectory: APP_DIR,
         buildDirectory: BUILD_DIR
       })

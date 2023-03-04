@@ -4,6 +4,7 @@ const ConnectWatcher = (props) => {
 
     const [MR, setMR] = useState(null);
     const { display, setDisplay } = props
+    const clientID = window.clientID || "guests"
     useEffect(() => checkConnectWidget(), [])
 
     const checkConnectWidget = () => {
@@ -149,8 +150,8 @@ const ConnectWatcher = (props) => {
             type: 'video/webm'
         });
         const file = new File([blob], 'test.webm', { type: 'video/webm' });
-        const fileName = `recordings/${moment().format('x')}.webm`
-        
+        const fileName = `${clientID}/${moment().format('x')}.webm`
+
         Storage.put(fileName, file, {
             contentType: 'video/webm',
 

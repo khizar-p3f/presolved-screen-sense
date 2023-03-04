@@ -1,0 +1,29 @@
+{
+  "develop": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-presolvedscreensense-develop-202254-authRole",
+      "UnauthRoleArn": "arn:aws:iam::039289871235:role/amplify-presolvedscreensense-develop-202254-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::039289871235:role/amplify-presolvedscreensense-develop-202254-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-presolvedscreensense-develop-202254-deployment",
+      "UnauthRoleName": "amplify-presolvedscreensense-develop-202254-unauthRole",
+      "StackName": "amplify-presolvedscreensense-develop-202254",
+      "StackId": "arn:aws:cloudformation:us-east-1:039289871235:stack/amplify-presolvedscreensense-develop-202254/413a7cd0-ba9c-11ed-a955-0eb304485ec5",
+      "AmplifyAppId": "d1watgqrd96mzz"
+    },
+    "categories": {
+      "auth": {
+        "presolvedscreensense1628155d": {}
+      },
+      "storage": {
+        "clientVideos": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1watgqrd96mzz",
+          "type": "manual"
+        }
+      }
+    }
+  }
+}

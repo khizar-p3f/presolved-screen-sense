@@ -19,6 +19,12 @@ const CreateEmbedWidget = ({ config }) => {
     })
 
     useEffect(() => {
+        if(config.clientID == undefined || config.clientSecret == undefined ){
+            Modal.error({
+                title: 'No Config Provided',
+                content: <AuthFailurePopUp />,
+            })
+        }
         if (clientID == 'f3452adfc5' && clientSecret == '#122$a12302054*(sdfas)asd') {
             setStartApp(true)
             setDisplay({
@@ -26,6 +32,7 @@ const CreateEmbedWidget = ({ config }) => {
                 authenticated: true,
                 appStarted: true,
             })
+            window.clientID = clientID
         } else {
             setAuth(false)
             setStartApp(false)

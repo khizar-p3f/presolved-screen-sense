@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Button, Col, Divider, Row, Space } from 'antd';
-import { PauseOutlined, AimOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { Button, Col, Divider, Drawer, Row, Space } from 'antd';
+import { PauseOutlined, AimOutlined, CheckOutlined, CloseOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import moment from 'moment-timezone';
-import { Storage } from 'aws-amplify'
+import { Storage,  } from 'aws-amplify'
+import S3RecordingsList from './recordings';
+
 const ManualRecording = (props) => {
     const { display } = props
     const [MR, setMR] = useState(null);
     const [recording, setRecording] = useState(false)
-
+    const [showRecordings, setShowRecordings] = useState(false)
+    const clientID= window.clientID || "guests"
     const recordScreen = async () => {
         return await navigator.mediaDevices.getDisplayMedia({
             audio: false,
@@ -54,27 +57,33 @@ const ManualRecording = (props) => {
             type: 'video/webm'
         });
         const file = new File([blob], 'test.webm', { type: 'video/webm' });
-        const fileName = `recordings/${moment().format('x')}.webm`        
+        const fileName = `${clientID}/${moment().format('x')}.webm`        
         Storage.put(fileName, file, {
             contentType: 'video/webm',
             level: 'public',
+            metadata: {
+                "clientID": clientID
+            },        
+
         }).then(result => console.log({ saveFileToS3: result }))
-        .catch(err => console.log({ saveFileToS3: err }));
+        .catch(err => console.error({ saveFileToS3: err }));
 
     }
-    const uploadFileToS3 = (file) => {
-
-    }
+  
     return (
         <div>
             <Row gutter={[16, 16]}>
                 <Col flex={0}>
                     <Button style={{ height: 60, fontSize: 20 }}
-                        type='default' icon={<AimOutlined />} onClick={() => startRecording()}>Record Screen</Button>
+                        type='default' icon={<AimOutlined />} onClick={() => startRecording()}>Record </Button>
                 </Col>
                 <Col flex={0}>
                     <Button style={{ height: 60, fontSize: 20 }}
-                        type='default' icon={<PauseOutlined />} onClick={() => stopRecording()}>Reload</Button>
+                        type='default' icon={<PauseOutlined />} onClick={() => stopRecording()}>Stop</Button>
+                </Col>
+                <Col flex={0}>
+                    <Button style={{ height: 60, fontSize: 20 }}
+                        type='default' icon={<UnorderedListOutlined />} onClick={() => setShowRecordings(true)}>View</Button>
                 </Col>
             </Row>
             <Divider />
@@ -88,6 +97,10 @@ const ManualRecording = (props) => {
                     </Space>
                 </Col>
             </Row>
+            <Drawer placement='right' width="80%" closable={true} onClose={() => setShowRecordings(false)} open={showRecordings}>
+                <S3RecordingsList />
+            </Drawer>
+    
         </div>
     )
 }
