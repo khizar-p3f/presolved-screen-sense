@@ -23,6 +23,9 @@
           "appId": "d1watgqrd96mzz",
           "type": "manual"
         }
+      },
+      "api": {
+        "presolvedscreensense": {}
       }
     }
   }

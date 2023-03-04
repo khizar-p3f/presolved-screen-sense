@@ -19,7 +19,7 @@ const S3RecordingsList = () => {
 
     const getAllfilesFromS3 = () => {
         setState({ filesLoaded: false,selected: null})
-        Storage.list(clientID, { level: 'public' }).then((result) => {
+        Storage.list(`${clientID}`, { level: 'public' }).then((result) => {
             setFiles(result)
             setState({ ...state, filesLoaded: true })
         })
